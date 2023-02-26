@@ -1,0 +1,43 @@
+for alembic we installed it >> pip install alembic
+type the command : alembic init alembic
+we have to make sure that alembic has access to the Base model in our .database file 
+so we import the (base) model to the env.py file it gives us access to sql alchemy models from app.models import base
+then on env.py on target metadata set it to Base.metadata
+then we need to get the DB URL on alembic by going to alembic.ini and navigate to the sqlalchmey.url = OUR url 
+but first we need to override the sqlalchmey.url by going to the env.py and config section we say : 
+
+config = context.config
+config.set_main_option("sqlalchemy.url","postgresql+psycopg2//postgres:postgres@localhost:5432/fastapi")
+
+and on the alembic.ini we  might leave sqlalchemy.url blank 
+
+then for changes upgrade/downgrade we type :
+alembic revision -m " create posts table "
+on /home/hazem/Documents/FastAPI/alembic/versions/d87d84fd6965_create_posts_table.py
+#####################################################################################################3
+configure the upgrade/downgrade
+
+if you want to add a revision 
+> alembic revision -m" add content to posts table " 
+if we want to know our current revision : 
+> alembic current
+if  we want to know the latest revision :
+> alembic heads 
+if we want to upgrade to the latest revision :
+> alembic upgrade heads 
+###################################################################################################
+if we want to downgrade to a previous version :
+> alembic downgrade -1 
+>alembic downgrade <version>
+###############################################################################################
+if we want alembic to autogenerate tables :
+> alembic revision --autogenerate -m " auto generate missing models"
+
+
+if you want to execute alembic type in thr terminal :
+alembic upgrade <version> :     alembic upgrade d87d84fd6965
+
+
+navigate to : https://alembic.sqlalchemy.org/en/latest/
+
+https://alembic.sqlalchemy.org/en/latest/api/ddl.html to upgrade/rollback
